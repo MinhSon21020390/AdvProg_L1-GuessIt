@@ -2,10 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "guessit.h"
-
 using namespace std;
-
-
 /***
     Args:
         
@@ -15,6 +12,7 @@ using namespace std;
 int generateRandomNumber() {
     // TODO: Return the random number in range 1 to 100
     return 100;
+    return rand() % ( 100 - 1 + 1 );
 }
 
 
@@ -28,6 +26,10 @@ int getPlayerGuess() {
     // TODO: Ask the player guest and return the player's number
 
     return 1;
+    int guess;
+    cout << "Nhap so: ";
+    cin >> guess;
+    return guess;
 }
 
 
@@ -47,9 +49,21 @@ string getAnswer(int number, int randomNumber) {
     ***/
     string answer;
 
+    if (number > randomNumber)
+    {
+        answer = "Your number is higher.";
+    }
+    else if (number < randomNumber)
+    {
+        answer = "Your number is lower.";
+    }
+    else
+    {
+        answer = "Congratulation! You win.";
+    }
+
     return answer;
 }
-
 
 /***
     Args:
@@ -59,10 +73,13 @@ string getAnswer(int number, int randomNumber) {
 ***/
 bool checkSuccess(string answer) {
     // TODO: return the result after checking that player guessed right or wrong
-    
+
+    if (answer != "Congratulation! You win.")
+    {
+        return false;
+    }
     return true;
 }
-
 
 /***
     Args:
@@ -74,9 +91,12 @@ bool checkContinuePlaying(char isContinued) {
     // TODO: return result after checking player continue playing or not
     bool result = false;
 
+    if (isContinued == 'y' || isContinued == 'Y')
+    {
+        result = true;
+    }
     return result;
 }
-
 
 /***
     Args:
@@ -88,9 +108,10 @@ char getPlayerOpinion() {
     // TODO: Ask the player about continue playing and return the player's choice
     char isContinued;
 
+    cout << "Ban co muon choi tiep? (Y/N)";
+    cin >> isContinued;
     return isContinued;
 }
-
 
 void playGuessIt() {
     int randomNumber = generateRandomNumber();
@@ -103,7 +124,6 @@ void playGuessIt() {
         cout << answer << endl;
     } while (!checkSuccess(answer));
 }
-
 int run() {
     srand(time(0));
     char isContinued;
